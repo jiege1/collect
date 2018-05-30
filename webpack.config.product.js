@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 require("babel-polyfill");
@@ -16,14 +15,6 @@ module.exports = {
     path: __dirname + '/build',
     filename: 'index.bundle.js'
   },
-  // devtool: 'cheap-module-eval-source-map', // 生产模式下不可用
-  // devtool: 'none',
-  // devServer: {
-  //   contentBase: "./public", //本地服务器所加载的页面所在的目录
-  //   historyApiFallback: true, //不跳转
-  //   inline: true,
-  //   hot: true,
-  // },
   module: {
     rules: [
       {
@@ -44,7 +35,7 @@ module.exports = {
               loader: 'css-loader',
               options: {
                 importLoaders: 1,
-                localIdentName: '[local][wj][hash:base64:6]',
+                localIdentName: '[wj][hash:base64:6]',
                 modules: true,
                 camelCase: true
               }
@@ -62,6 +53,7 @@ module.exports = {
     alias: {
       core: path.join(__dirname, 'core'),
       components: rootSrc + '/components',
+      common: rootSrc + '/common',
     },
   },
   plugins: [
@@ -70,12 +62,11 @@ module.exports = {
         NODE_ENV: JSON.stringify('production'),
       }
     }),
-    // new OpenBrowserPlugin({ url: 'http://localhost:8080' }),
     // 压缩代码
     new UglifyJsPlugin(),
 
+    // 指定一个html模版，
     new HtmlWebpackPlugin({
-      // 指定一个html模版，
       template: path.resolve(__dirname + '/public/index.html'),
     }),
     // 将css写入css文件，并注入html模版
@@ -92,5 +83,3 @@ module.exports = {
     )
   ],
 };
-
-console.log("process.env.NODE_ENV 的值是(webpack.config.prod.js)："+ process.env.NODE_ENV)

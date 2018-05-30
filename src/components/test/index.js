@@ -1,11 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import css from './index.less';
 
 export default class Test extends React.Component {
 
-  static propTypes = {};
+  static propTypes = {
+    content: PropTypes.string,
+  };
 
-  static defaultProps = {};
+  static defaultProps = {
+    content: 'test',
+  };
 
   constructor(props) {
     super(props);
@@ -17,9 +22,8 @@ export default class Test extends React.Component {
 
   render() {
     return (
-      <div>
-        Test
-        $END$
+      <div className={css.content}>
+        {this.props.content}
       </div>
     );
   }

@@ -6,4 +6,3 @@ build
 .idea
 _files
 **/ttf/*.ttf
-public/mock/data/getData.json
